@@ -18,6 +18,11 @@ class Product(BaseModel):
     class Config:
         orm_model = True
 
+class ProductCreate(Product):
+    pass
+
+
+
 
 
 class UserCreate(BaseModel):

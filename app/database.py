@@ -10,7 +10,9 @@ import time
 from sqlalchemy.orm import Session
 from .config import settings
 
-SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+# SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:password1234@localhost/ecommerce'
+
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
