@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
-# from . import database,schemas, model
-# from .routers import post, user, auth, vote
+from . import database, model
+from .routers import product
+from sqlalchemy.orm import Session
 # from .config import settings
 
 origins = ["*"]
@@ -20,14 +21,24 @@ app.add_middleware(
 )
 
 
-# app.include_router(post.router)
+model.Base.metadata.create_all(bind=database.engine)
+
+
+app.include_router(product.router)
 # app.include_router(user.router)
 # app.include_router(auth.router)
 # app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"message": "hello world"}
+    return {"message": "hello world, this is a new project"}
+
+# @app.get("/products/")
+# def get_products(db: Session = Depends(database.get_db)):
+ 
+#     product = db.query(model.Product).all()
+#     return product
+
 
 
 while True:

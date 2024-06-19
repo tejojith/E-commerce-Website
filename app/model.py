@@ -49,8 +49,7 @@ class Order(Base):
     pr_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), nullable= False)
     owner = relationship("Product")
     
-    pr_quantity = Column(Integer, ForeignKey("cart.quantity", ondelete="CASCADE"), nullable= False)
-    owner = relationship("Cart")
+    pr_quantity = Column(Integer, nullable= False)
 
     status = Column(String, nullable=False)
 

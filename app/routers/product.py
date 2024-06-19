@@ -4,18 +4,39 @@ from typing import List, Optional
 
 from sqlalchemy import func
 # from sqlalchemy.sql.functions import func
-from .. import model, schemas, util, oauth2
-from .. import database 
+from .. import model, schemas, database 
 
 router = APIRouter(
-    prefix = "/products",
+    prefix = "",
     tags = ['Products'] )
 
 
-@router.get("/")
+
+
+@router.get("/products/")
 def get_products(db: Session = Depends(database.get_db)):
-    
-    
+ 
+    product = db.query(model.Product).all()
+    return product
+
+
+@router.post("/", status_code= status.HTTP_201_CREATED, response_model=schemas.Product)
+def create_products(post: schemas.ProductCreate, db: Session = Depends(database.get_db)):
+
+    new_product = model.Product(owner_id = id,**post.dict())
+    db.add(new_product)
+    db.commit()
+    db.refresh(new_product)
+    return new_product
+
+
+
+
+
+
+
+
+#     ---------
     #cursor.execute("""SELECT * FROM post """)
     #posts = cursor.fetchall()
     # print(limit)
