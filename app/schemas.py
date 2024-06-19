@@ -4,23 +4,29 @@ from typing import Optional
 from pydantic.types import conint
 
 
-class Product(BaseModel):
+class ProductBase(BaseModel):
 
-    id: int
+    
     name: str
-    img_link: str
+    image_link: str
     price: int
     stock: int 
-    size: str
+    size: int
     gender: str
     category: str
 
     class Config:
         orm_model = True
 
-class ProductCreate(Product):
+class ProductCreate(ProductBase):
     pass
 
+class Product(ProductBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        orm_model = True
 
 
 

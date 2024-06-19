@@ -7,13 +7,13 @@ from sqlalchemy import func
 from .. import model, schemas, database 
 
 router = APIRouter(
-    prefix = "",
+    prefix = "/products",
     tags = ['Products'] )
 
 
 
 
-@router.get("/products/")
+@router.get("/")
 def get_products(db: Session = Depends(database.get_db)):
  
     product = db.query(model.Product).all()
@@ -23,7 +23,7 @@ def get_products(db: Session = Depends(database.get_db)):
 @router.post("/", status_code= status.HTTP_201_CREATED, response_model=schemas.Product)
 def create_products(post: schemas.ProductCreate, db: Session = Depends(database.get_db)):
 
-    new_product = model.Product(owner_id = id,**post.dict())
+    new_product = model.Product(**post.dict())
     db.add(new_product)
     db.commit()
     db.refresh(new_product)
