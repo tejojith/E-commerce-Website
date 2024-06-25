@@ -51,6 +51,33 @@ def delete_product(id: int,db: Session = Depends(database.get_db)):
     return Response(status_code= status.HTTP_204_NO_CONTENT)
 
 
+#update a product
+@router.put("/{id}", response_model=schemas.Product)
+def update_product(id: int, updated_post: schemas.ProductCreate,db: Session = Depends(database.get_db)):
+
+    product_query = db.query(model.Product).filter(model.Product.id == id)
+    product = product_query.first()
+
+
+    if product == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail = f"post of id{id} doesnt exist")
+    
+    # if post.owner_id != current_user.id:
+    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail = "NOT authorised to perform req action")
+
+    product_query.update(updated_post.dict(), synchronize_session=False)
+    db.commit()
+    return product_query.first()
+    
+
+
+
+
+
+
+
+
+
 
 
 
