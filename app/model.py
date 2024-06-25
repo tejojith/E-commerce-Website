@@ -47,10 +47,7 @@ class Cart(Base):
     owner = relationship("User")
 
     products = relationship("Product", secondary= product_cart_table , back_populates="in_cart")
-    #have to figure this out, errors is coming
-
-    # pr_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), nullable= False)
-    # owner = relationship("Product")
+    #refer: https://medium.com/@warrenzhang17/many-to-many-relationships-in-sqlalchemy-ba08f8e9ccf7
 
     quantity = Column(Integer, nullable=False)
 
